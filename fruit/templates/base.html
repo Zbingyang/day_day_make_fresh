@@ -1,0 +1,54 @@
+
+<aside class="lt_aside_nav content mCustomScrollbar">
+     <h2><a href="index.html">起始页</a></h2>
+     <ul>
+      <li>
+       <dl>
+        <dt>常用布局示例</dt>
+        <!--当前链接则添加class:active-->
+        <dd><a href="{% url 'management:product_list' %}" class="active">商品列表示例</a></dd>
+        <dd><a href="{% url 'management:product_detail' %}">商品详情示例</a></dd>
+        <dd><a href="{% url 'management:recycle_bin' %}">商品回收站示例</a></dd>
+       </dl>
+      </li>
+      <li>
+       <dl>
+        <dt>订单信息</dt>
+        <dd><a href="{% url 'management:order_list' %}">订单列表示例</a></dd>
+        <dd><a href="{% url 'management:order_detail' %}">订单详情示例</a></dd>
+       </dl>
+      </li>
+      <li>
+       <dl>
+        <dt>会员管理</dt>
+        <dd><a href="{% url 'management:user_list' %}">会员列表示例</a></dd>
+        <dd><a href="{% url 'management:user_detail' %}">添加会员（详情）示例</a></dd>
+        <dd><a href="{% url 'management:user_rank' %}">会员等级示例</a></dd>
+        <dd><a href="{% url 'management:adjust_funding' %}">会员资金管理示例</a></dd>
+       </dl>
+      </li>
+      <li>
+       <dl>
+        <dt>基础设置</dt>
+        <dd><a href="{% url 'management:setting' %}">站点基础设置示例</a></dd>
+       </dl>
+      </li>
+      <li>
+       <dl>
+        <dt>配送与支付设置</dt>
+        <dd><a href="{% url 'management:express_list' %}">配送方式</a></dd>
+        <dd><a href="{% url 'management:pay_list' %}">支付方式</a></dd>
+       </dl>
+      </li>
+      <li>
+       <dl>
+        <dt>在线统计</dt>
+        <dd><a href="{% url 'management:discharge_statistic' %}">流量统计</a></dd>
+        <dd><a href="{% url 'management:sales_volume' %}">销售额统计</a></dd>
+       </dl>
+      </li>
+      <li>
+       <p class="btm_infor">© DeathGhost.cn 版权所有</p>
+      </li>
+     </ul>
+</aside>

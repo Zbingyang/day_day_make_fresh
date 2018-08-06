@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>天天生鲜-用户中心</title>
+	<link rel="stylesheet" type="text/css" href="/static/app/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/app/css/main.css">
+</head>
+<body>
+		{% include 'hh.html' %}
+
+	<div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src="/static/ap/images/logo.png"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
+		<div class="search_con fr">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>		
+	</div>
+
+	<div class="main_con clearfix">
+        {% include 'user.html' %}
+		<div class="right_content clearfix">
+				<h3 class="common_title2">全部订单</h3>
+                {% for order in orders %}
+                      <ul class="order_list_th w978 clearfix">
+					<li class="col01">{{ order.odate }}</li>
+					<li class="col02">{{ order.order_id }}</li>
+                    {% if order.oIsPay %}
+					    <li class="col02 stress">已支付</li>
+                    {% else %}
+                        <li class="co102 stress">未支付</li>
+                    {% endif %}
+				</ul>
+				<table class="order_list_table w980">
+					<tbody>
+
+						<tr>
+							<td width="55%">
+                                 {% for detail in order.orderdetailinfo_set.all %}
+								<ul class="order_goods_list clearfix">
+									<li class="col01"><img src="/media/{{ detail.goods.gpic }}"></li>
+									<li class="col02">{{ detail.goods.gtitle }}<em>{{ detail.goods.gprice }}元/{{ good.good_gunit }}</em></li>
+									<li class="col03">1</li>
+									<li class="col04">{{ detail.goods.gprice }}元</li>
+								</ul>
+                                 {% endfor %}
+							</td>
+							<td width="15%">{{ order.ototal }}元</td>
+                            {% if order.oIsPay %}
+                                <td width="15%">已付款</td>
+                                <td width="15%"><a href="#" class="oper_btn">查看物流</a></td>
+                            {% else %}
+                                <td width="15%">待付款</td>
+							    <td width="15%"><a href="#" class="oper_btn">去付款</a></td>
+                            {% endif %}
+						</tr>
+					</tbody>
+				</table>
+            {% endfor %}
+				
+
+				<div class="pagenation">
+                    <a href="/app/user_center_order/">首页</a>
+                    {% if orders.has_previous %}
+					    <a href="/app/user_center_order/?pageIndex={{ orders.previous_page_number }}">上一页</a>
+                    {% endif %}
+                    {% for order in orders.paginator.page_range %}
+                        {% if forloop.last %}
+                        <a href="/app/user_center_order/?pageIndex={{ order }}">最后一页</a>
+                        {% else %}
+                        <a href="/app/user_center_order/?pageIndex={{ order }}">{{ order }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if orders.has_next %}
+                        <a href="/app/user_center_order/?pageIndex={{ orders.next_page_number }}">下一页></a>
+                    {% endif %}
+
+				</div>
+		</div>
+	</div>
+
+
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+    <script src="/static/app/js/jquery-1.12.4.min.js"></script>
+	<script src="/static/app/common/user_center_order.js"></script>
+    <script src="/static/app/common/template.js"></script>
+</body>
+</html>

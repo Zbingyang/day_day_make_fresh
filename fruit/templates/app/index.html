@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>天天生鲜-首页</title>
+	<link rel="stylesheet" type="text/css" href="/static/app/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/app/css/main.css">
+	<script type="text/javascript" src="/static/app/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/static/app/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/static/app/js/slide.js"></script>
+</head>
+<body>
+	{% include 'hh.html' %}
+	<div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src="/static/app/images/logo.png"></a>
+		<div class="search_con fl">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>
+		<div class="guest_cart fr">
+			<a href="{% url 'app:cart' %}" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="show_count">1</div>
+		</div>
+	</div>
+
+	<div class="navbar_con">
+		<div class="navbar">
+			<h1 class="fl">全部商品分类</h1>
+			<ul class="navlist fl">
+				<li><a href="">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="center_con clearfix">
+		<ul class="subnav fl">
+
+            {% for type in types %}
+                {% if forloop.counter == 1 %}
+                	<li><a href="/app/index/{{ type.id }}" class="fruit">{{ type.ttitle }}</a></li>
+                {% elif forloop.counter == 2 %}
+                    <li><a href="/app/index/{{ type.id }}" class="seafood">{{ type.ttitle }}</a></li>
+                {% elif forloop.counter == 3 %}
+                    <li><a href="/app/index/{{ type.id }}" class="meet">{{ type.ttitle }}</a></li>
+                {% elif forloop.counter == 4 %}
+                    <li><a href="/app/index/{{ type.id }}" class="egg">{{ type.ttitle }}</a></li>
+                {% elif forloop.counter == 5 %}
+                    <li><a href="/app/index/{{ type.id }}" class="vegetables">{{ type.ttitle }}</a></li>
+                {% else %}
+                    <li><a href="/app/index/{{ type.id }}" class="ice">{{ type.ttitle }}</a></li>
+                {% endif %}
+            {% endfor %}
+{#			<li><a href="#model01" class="fruit">新鲜水果</a></li>#}
+{#			<li><a href="#model02" class="seafood">海鲜水产</a></li>#}
+{#			<li><a href="#model03" class="meet">猪牛羊肉</a></li>#}
+{#			<li><a href="#model04" class="egg">禽类蛋品</a></li>#}
+{#			<li><a href="#model05" class="vegetables">新鲜蔬菜</a></li>#}
+{#			<li><a href="#model06" class="ice">速冻食品</a></li>#}
+		</ul>
+		<div class="slide fl">
+			<ul class="slide_pics">
+				<li><img src="/static/app/images/slide.jpg" alt="幻灯片"></li>
+				<li><img src="/static/app/images/slide02.jpg" alt="幻灯片"></li>
+				<li><img src="/static/app/images/slide03.jpg" alt="幻灯片"></li>
+				<li><img src="/static/app/images/slide04.jpg" alt="幻灯片"></li>
+			</ul>
+			<div class="prev"></div>
+			<div class="next"></div>
+			<ul class="points"></ul>
+		</div>
+		<div class="adv fl">
+			<a href="#"><img src="/static/app/images/adv01.jpg"></a>
+			<a href="#"><img src="/static/app/images/adv02.jpg"></a>
+		</div>
+	</div>
+    {% for type in types %}
+        <div class="list_model">
+            <div class="list_title clearfix">
+                <h3 class="fl" id="model01">{{ type.ttitle }}</h3>
+                <div class="subtitle fl">
+                    <span>|</span>
+                    <a href="#">鲜芒</a>
+                    <a href="#">加州提子</a>
+                    <a href="#">亚马逊牛油果</a>
+                </div>
+                <a href="/app/list/{{ type.id }}" class="goods_more fr" id="fruit_more">查看更多 ></a>
+            </div>
+
+            <div class="goods_con clearfix">
+
+                <div class="goods_banner fl"><img src="/static/app/{{ type.type_img }}"></div>
+                <ul class="goods_list fl">
+                {% if id == '0' %}
+                    {% for good in type.goodsinfo_set.all %}
+                            {% if forloop.counter < 5 %}
+                            <li>
+                                <h4><a href="">{{ good.gtitle }}</a></h4>
+                                <a href="{% url 'app:detail' good.id %}"><img src="/media/{{ good.gpic }}"></a>
+                                <div class="prize">¥ {{ good.gprice }}</div>
+                            {% endif %}
+                            </li>
+                    {% endfor %}
+
+                {% else %}
+
+                     {% for good in goods %}
+                         {% if good.gtype == type %}
+                            {% if forloop.counter < 5 %}
+                            <li>
+                                <h4><a href="#">{{ good.gtitle }}</a></h4>
+                                <a href="{% url 'app:detail' good.id %}"><img src="/media/{{ good.gpic }}"></a>
+                                <div class="prize">¥ {{ good.gprice }}</div>
+                            {% endif %}
+                            </li>
+                         {% endif %}
+                    {% endfor %}
+
+                {% endif %}
+
+
+
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
+
+{#	<div class="list_model">#}
+{#		<div class="list_title clearfix">#}
+{#			<h3 class="fl" id="model02">海鲜水产</h3>#}
+{#			<div class="subtitle fl">#}
+{#				<span>|</span>#}
+{#				<a href="#">河虾</a>#}
+{#				<a href="#">扇贝</a>				#}
+{#			</div>#}
+{#			<a href="#" class="goods_more fr">查看更多 ></a>#}
+{#		</div>#}
+{##}
+{#		<div class="goods_con clearfix">#}
+{#			<div class="goods_banner fl"><img src="/static/app/images/banner02.jpg"></div>#}
+{#			<ul class="goods_list fl">#}
+{#				<li>#}
+{#					<h4><a href="#">青岛野生海捕大青虾</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods/goods0018.jpg"></a>#}
+{#					<div class="prize">¥ 48.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">扇贝</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods/goods0019.jpg"></a>#}
+{#					<div class="prize">¥ 46.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">冷冻秋刀鱼</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods/goods0020.jpg"></a>#}
+{#					<div class="prize">¥ 19.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">基围虾</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods/goods0021.jpg"></a>#}
+{#					<div class="prize">¥ 25.00</div>#}
+{#				</li>#}
+{#			</ul>#}
+{#		</div>#}
+{#	</div>#}
+
+{#	<div class="list_model">#}
+{#		<div class="list_title clearfix">#}
+{#			<h3 class="fl" id="model03">猪牛羊肉</h3>#}
+{#			<div class="subtitle fl">#}
+{#				<span>|</span>#}
+{#				<a href="#">鲜芒</a>#}
+{#				<a href="#">加州提子</a>#}
+{#				<a href="#">亚马逊牛油果</a>#}
+{#			</div>#}
+{#			<a href="#" class="goods_more fr">查看更多 ></a>#}
+{#		</div>#}
+{##}
+{#		<div class="goods_con clearfix">#}
+{#			<div class="goods_banner fl"><img src="/static/app/images/banner03.jpg"></div>#}
+{#			<ul class="goods_list fl">#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#			</ul>#}
+{#		</div>#}
+{#	</div>#}
+{##}
+{#	<div class="list_model">#}
+{#		<div class="list_title clearfix">#}
+{#			<h3 class="fl" id="model04">禽类蛋品</h3>#}
+{#			<div class="subtitle fl">#}
+{#				<span>|</span>#}
+{#				<a href="#">鲜芒</a>#}
+{#				<a href="#">加州提子</a>#}
+{#				<a href="#">亚马逊牛油果</a>#}
+{#			</div>#}
+{#			<a href="#" class="goods_more fr">查看更多 ></a>#}
+{#		</div>#}
+
+{#		<div class="goods_con clearfix">#}
+{#			<div class="goods_banner fl"><img src="/static/app/images/banner04.jpg"></div>#}
+{#			<ul class="goods_list fl">#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#			</ul>#}
+{#		</div>#}
+{#	</div>#}
+
+{#	<div class="list_model">#}
+{#		<div class="list_title clearfix">#}
+{#			<h3 class="fl" id="model05">新鲜蔬菜</h3>#}
+{#			<div class="subtitle fl">#}
+{#				<span>|</span>#}
+{#				<a href="#">鲜芒</a>#}
+{#				<a href="#">加州提子</a>#}
+{#				<a href="#">亚马逊牛油果</a>#}
+{#			</div>#}
+{#			<a href="#" class="goods_more fr">查看更多 ></a>#}
+{#		</div>#}
+
+{#		<div class="goods_con clearfix">#}
+{#			<div class="goods_banner fl"><img src="/static/app/images/banner05.jpg"></div>#}
+{#			<ul class="goods_list fl">#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#			</ul>#}
+{#		</div>#}
+{#	</div>#}
+{##}
+{#	<div class="list_model">#}
+{#		<div class="list_title clearfix">#}
+{#			<h3 class="fl" id="model06">速冻食品</h3>#}
+{#			<div class="subtitle fl">#}
+{#				<span>|</span>#}
+{#				<a href="#">鲜芒</a>#}
+{#				<a href="#">加州提子</a>#}
+{#				<a href="#">亚马逊牛油果</a>#}
+{#			</div>#}
+{#			<a href="#" class="goods_more fr">查看更多 ></a>#}
+{#		</div>#}
+
+{#		<div class="goods_con clearfix">#}
+{#			<div class="goods_banner fl"><img src="/static/app/images/banner06.jpg"></div>#}
+{#			<ul class="goods_list fl">#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#				<li>#}
+{#					<h4><a href="#">维多利亚葡萄</a></h4>#}
+{#					<a href="#"><img src="/static/app/images/goods.jpg"></a>#}
+{#					<div class="prize">¥ 38.00</div>#}
+{#				</li>#}
+{#			</ul>#}
+{#		</div>#}
+{#	</div>#}
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+	<script type="text/javascript" src="/static/app/js/slide.js"></script>
+	<script type="text/javascript">
+		BCSlideshow('focuspic');
+		var oFruit = document.getElementById('fruit_more');
+		var oShownum = document.getElementById('show_count');
+
+		var hasorder = localStorage.getItem('order_finish');
+
+		if(hasorder)
+		{
+			oShownum.innerHTML = '2';
+		}
+
+		oFruit.onclick = function(){
+			window.location.href = 'list.html';
+		}
+	</script>
+</body>
+</html>
